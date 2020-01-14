@@ -1,4 +1,4 @@
-# for community
+# Transcoding on Livepeer
 
 Here is how to run a Livepeer Transcoder.
 

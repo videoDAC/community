@@ -17,3 +17,5 @@ Unzip and in Terminal, run:
 This will register you to the Video DAC Transcoder.
 
 It might be a good place to start learning about Transcoding on Livepeer.
+
+To follow... a guide to being an Orchestrator.

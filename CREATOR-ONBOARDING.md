@@ -1,12 +1,50 @@
+# Welcome
+
+Hi there, you are probably reading this because you are interested in learning more about opportunities with new stream-to-earn opportunities.
+
+This article is designed to help you through some steps required to be able to participate with development and testing of new technologies.
+
+You may have questions about some of the steps, and if so, I encourage you to [message the author](https://t.me/chrishobcroft).
+
 ## Introduction
 
 This document is to help creators of digital A/V content to get started with videoDAC.
 
 It will cover:
 
-- Getting an Ethereum wallet
-- Installing Open Broadcast Software (OBS) Studio
-- Getting set up on Telegram
+- Setting up Open Broadcast Software (OBS) Studio, for you to stream
+- Getting an Ethereum wallet, for you to receive digital money
+- Getting set up on Telegram, for you to communicate with your listeners / viewers
+
+## Installing Open Broadcast Software Studio
+
+Go to OBS Studio homepage on your computer, and select the operating system that you are using (Windows, Mac, Linux).
+
+One installed, open the app. When prompted, decline the offer of running the auto-configuration.
+
+### Base setup
+
+- Go to Settings > Output, and set "Output Mode" to Advanced. Set the following:
+  - Streaming > Bitrate, set to `500 Kbps`
+  - Streaming > Keyframe interval (seconds, 0=auto), set to `2`.
+  - Click "OK" to save these settings.
+
+![image](https://user-images.githubusercontent.com/59374467/79101677-af65de80-7d86-11ea-8d4f-abaed1116b3f.png)
+
+- Then, go to Settings > Video, and set both the "Base (Canvas) Resolution" and the "Output (Scaled Resolution)" to `640x360`. Now switch the FPS to `24 NTSC`. Click "OK" to save these settings.
+
+![image](https://user-images.githubusercontent.com/59374467/79101419-18008b80-7d86-11ea-88ee-c490d71a66ed.png)
+
+- Finally, go to Setting > Stream, and set Service to "Custom". Leave the Server and Stream Key empty for now.
+
+![image](https://user-images.githubusercontent.com/59374467/79101345-f4d5dc00-7d85-11ea-99d8-45e10e23f789.png)
+
+### Configuring your stream
+
+Video: The big black box in the middle of the screen it your "canvas" for visual content. You can have 1 or more "Scenes", and on each scene you can add 1 or more "Sources", e.g. video from a webcam.
+
+Audio: The "Mixer" is where you configure the sound for your livestream. You can configure new sound devices in Settings > Audio, including microphones, sound cards and sounds being played by your computer.
+
 
 ## Getting an Ethereum wallet
 
@@ -74,35 +112,6 @@ You can switch your Ethereum wallet to Rinkeby either by:
 - Select "Rinkeby Test Network"
 
 ![image](https://user-images.githubusercontent.com/59374467/79102578-a1b15880-7d88-11ea-8a50-d0ae2bd8a4ed.png)
-
-## Installing Open Broadcast Software Studio
-
-Go to OBS Studio homepage on your computer, and select the operating system that you are using (Windows, Mac, Linux).
-
-One installed, open the app. When prompted, decline the offer of running the auto-configuration.
-
-### Base setup
-
-- Go to Settings > Output, and set "Output Mode" to Advanced. Set the following:
-  - Streaming > Bitrate, set to `500 Kbps`
-  - Streaming > Keyframe interval (seconds, 0=auto), set to `2`.
-  - Click "OK" to save these settings.
-
-![image](https://user-images.githubusercontent.com/59374467/79101677-af65de80-7d86-11ea-8d4f-abaed1116b3f.png)
-
-- Then, go to Settings > Video, and set both the "Base (Canvas) Resolution" and the "Output (Scaled Resolution)" to `640x360`. Now switch the FPS to `24 NTSC`. Click "OK" to save these settings.
-
-![image](https://user-images.githubusercontent.com/59374467/79101419-18008b80-7d86-11ea-88ee-c490d71a66ed.png)
-
-- Finally, go to Setting > Stream, and set Service to "Custom". Leave the Server and Stream Key empty for now.
-
-![image](https://user-images.githubusercontent.com/59374467/79101345-f4d5dc00-7d85-11ea-99d8-45e10e23f789.png)
-
-### Configuring your stream
-
-Video: The big black box in the middle of the screen it your "canvas" for visual content. You can have 1 or more "Scenes", and on each scene you can add 1 or more "Sources", e.g. video from a webcam.
-
-Audio: The "Mixer" is where you configure the sound for your livestream. You can configure new sound devices in Settings > Audio, including microphones, sound cards and sounds being played by your computer.
 
 ## Getting set up on Telegram
 

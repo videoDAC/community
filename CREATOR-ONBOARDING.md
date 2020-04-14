@@ -1,6 +1,6 @@
 # Welcome
 
-Hi there, you are probably reading this because you are interested in learning more about opportunities with new stream-to-earn opportunities.
+Hi there, you are probably reading this because you are interested in learning more about opportunities to stream-to-earn.
 
 This article is designed to help you through some steps required to be able to participate with development and testing of new technologies.
 

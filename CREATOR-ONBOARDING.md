@@ -18,7 +18,7 @@ It will cover:
 
 ## Installing Open Broadcast Software Studio
 
-Go to OBS Studio homepage on your computer, and select the operating system that you are using (Windows, Mac, Linux).
+Go to [OBS Studio homepage](https://obsproject.com/) on your computer, and select the operating system that you are using (Windows, Mac, Linux).
 
 One installed, open the app. When prompted, decline the offer of running the auto-configuration.
 
@@ -41,10 +41,15 @@ One installed, open the app. When prompted, decline the offer of running the aut
 
 ### Configuring your stream
 
-Video: The big black box in the middle of the screen it your "canvas" for visual content. You can have 1 or more "Scenes", and on each scene you can add 1 or more "Sources", e.g. video from a webcam.
+**Configuring Video**: The big black box in the middle of the screen it your "canvas" for visual content.
 
-Audio: The "Mixer" is where you configure the sound for your livestream. You can configure new sound devices in Settings > Audio, including microphones, sound cards and sounds being played by your computer.
+You can have 1 or more "Scenes", and on each scene you can add 1 or more "Sources".
 
+"Sources" can be text, image, recorded video, live video (from camera), screenshare, window share.
+
+**Configuring Audio**: The "Mixer" is where you configure the sound for your livestream.
+
+You can configure new sound devices in Settings > Audio, including microphones, sound cards and sounds being played by your computer.
 
 ## Getting an Ethereum wallet
 

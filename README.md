@@ -8,13 +8,30 @@ For Mac, download this: https://github.com/livepeer/go-livepeer/releases/downloa
 
 For Linux, download this: https://github.com/livepeer/go-livepeer/releases/download/v0.5.8/livepeer-linux-amd64.tar.gz
 
-Unzip and in Terminal, run:
+Unzip and in Terminal, run the following command from the folder containing the `livepeer` binary:
 
 ```
 ./livepeer -transcoder -orchAddr 54.93.169.248:8935 -orchSecret mango
 ```
 
 This will register you to perform work for the videoDAC Orchestrator. Contributing your transcoding capacity helps fund @videoDAC.
+
+## Start on boot
+
+If you would like to configure your system to be available for Transcoding when it starts up, follow these instructions:
+
+This guide assumes user is `ubuntu` and that `livepeer` binary exists at `/home/ubuntu/livepeer-linux-amd64/livepeer`
+
+```
+cd /etc/systemd/system
+sudo wget https://raw.githubusercontent.com/videoDAC/simple-streaming-server/master/systemd/videodac-transcoder.service
+sudo systemctl enable videodac-transcoder.service
+sudo systemctl start videodac-transcoder.service
+```
+
+Your system is now available to provide Transcoding services to videoDAC's Orchestrator on Livepeer's Transcoding Marketplace.
+
+## videoDAC
 
 You can find out more about the [videoDAC Orchestrator on Livepeer's Protocol Explorer](https://explorer.livepeer.org/accounts/0xdac817294c0c87ca4fa1895ef4b972eade99f2fd/campaign), where you can stake your Livepeer Tokens to the project's node, to help it earn more work in the network, and to earn yourself a share of the rewards.
 

@@ -1,6 +1,6 @@
-# Transcoding on Livepeer
+# Transcoding for videoDAC on Livepeer
 
-Here is how to run a Livepeer Transcoder.
+Here is how to run a Livepeer Transcoder to provide Transcoding capacity in videoDAC's operations in Livepeer's Transcoding Marketplace.
 
 It assumes you have a Mac or Linux computer.
 

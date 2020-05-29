@@ -31,6 +31,11 @@ sudo systemctl start videodac-transcoder.service
 
 Your system is now available to provide Transcoding services to videoDAC's Orchestrator on Livepeer's Transcoding Marketplace.
 
+You can tail the logs of the service with this command:
+```
+sudo journalctl -f --unit=videodac-transcoder.service
+```
+
 ## videoDAC
 
 You can find out more about the [videoDAC Orchestrator on Livepeer's Protocol Explorer](https://explorer.livepeer.org/accounts/0xdac817294c0c87ca4fa1895ef4b972eade99f2fd/campaign), where you can stake your Livepeer Tokens to the project's node, to help it earn more work in the network, and to earn yourself a share of the rewards.

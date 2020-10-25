@@ -4,9 +4,9 @@ Here is how to run a Livepeer Transcoder to provide Transcoding capacity in vide
 
 It assumes you have a Mac or Linux computer.
 
-For Mac, download this: https://github.com/livepeer/go-livepeer/releases/download/v0.5.8/livepeer-darwin-amd64.tar.gz
+For Mac, download this: https://github.com/livepeer/go-livepeer/releases/download/v0.5.11/livepeer-darwin-amd64.tar.gz
 
-For Linux, download this: https://github.com/livepeer/go-livepeer/releases/download/v0.5.8/livepeer-linux-amd64.tar.gz
+For Linux, download this: https://github.com/livepeer/go-livepeer/releases/download/v0.5.11/livepeer-linux-amd64.tar.gz
 
 Unzip and in Terminal, run the following command from the folder containing the `livepeer` binary:
 

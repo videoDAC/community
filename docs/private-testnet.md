@@ -1,4 +1,4 @@
-# Private BOT Network on Public Blockchain Testnet
+# Private Livepeer Network on Public Blockchain Testnet
 
 ## Introduction
 
@@ -6,58 +6,148 @@ For new Orchestrators in Livepeer Network, it can be useful to do some thorough 
 
 These instructions are to help you set up an end-to-end Broadcaster-Orchestrator-Transcoder (BOT) network, using Livepeer. They are designed to help understand what is expected of an Orchestrator, as an actor in Livepeer Protocol.
 
-For those familiar with command-line interfaces, these instructions ought to be completed within 30 minutes of work. For those less familiar with the command-line, you should allocate 1-2 hours.
+### Info: Time
 
-## Requirements
+For those familiar with linux command-line interfaces, these instructions should take about 30 minutes, split into two 15 minute periods, with approximately 2-3 hours between.
+
+For those less familiar with linux command-line interface, these instructions are written with you in mind :)
+
+### Warning: CPU Only
+
+For simplicity, this guide will use a CPU for Transcoding.
+
+When running on Livepeer on Ethereum Mainnet, it is recommended to use a GPU for Transcoding.
+
+### Info: Requirements
 
 You will need:
 
-- 2 linux-amd64 servers:
-  - Broadcaster (1Gb, 1 vCPU, 10Gb)
-  - Orchestrator/Transcoder (1Gb, 1 vCPU, 100Gb)
+- 2 servers
+  - Consider renting these for a few cents per hour from somewhere like [Exoscale](https://portal.exoscale.com/register?r=K0MW1ac3fg6D) or [CherryServers](https://www.cherryservers.com/?affiliate=W6TL19AY).
 
-- Some ETH on Rinkeby testnet (https://faucet.rinkeby.io/)
+- Rinkeby ETH (If you need some, go to the [Rinkeby Faucet](https://faucet.rinkeby.io/) and follow the instructions)
 
-- An ethUrl for Rinkeby testnet (e.g. from https://infura.io/)
+### Warning: command-line interfaces
 
-## Set up O/T
+This guide will make heavy use of the linux command line.
 
-Session 1: Connect to your O/T, perhaps via `ssh`, or other means.
+A knowledge of `screen` or `systemd` would be useful, but not compulsory.
 
-### Download geth
+## Set up servers
+
+Create 2 new servers:
+
+- Orchestrator / Transcoder (O/T)
+ - RAM: 2Gb
+ - CPU: 2 vCPU
+ - Disk: 100Gb SSD
+
+- Broadcaster (B)
+ - RAM: 2Gb
+ - CPU: 2 vCPU
+ - Disk: 100Gb SSD
+
+Both servers should have full network access to each other on all ports.
+
+### Run Ethereum on O/T (Session 1)
+
+Open a session on the O/T server.
+
+#### Download geth
 ```
-
+wget https://gethstore.blob.core.windows.net/builds/geth-linux-amd64-1.10.2-97d11b01.tar.gz
+tar -xzf geth-linux-amd64-1.10.2-97d11b01.tar.gz
+rm geth-linux-amd64-1.10.2-97d11b01.tar.gz
 ```
 
 This version was the latest version when this document was last edited. To check for newer versions, go to [geth Download page](https://geth.ethereum.org/downloads/), and raise an issue if there is a new version.
 
-### Download livepeer
+#### Start syncing
 
-Session 2: Open another session on your O/T.
+```
+./geth-linux-amd64-1.10.2-97d11b01/geth -rinkeby -http -syncmode snap
+```
+
+If your session gets disconnected, don't worry, just reconnect and run this last command again.
+
+#### Notes for advanced users
+
+You may wish to run this command inside a temporary container like `screen`, in case you get disconnected from the session. Try `screen -DR G` where `G` is for `geth`. `Ctrl-A-D` exits you from screen.
+
+Alternatively, set this up as a `systemd` service, so that it runs on startup.
+
+### Run Ethereum on B (Session 2)
+
+Open a session on the B server.
+
+#### Download geth
+```
+wget https://gethstore.blob.core.windows.net/builds/geth-linux-amd64-1.10.2-97d11b01.tar.gz
+tar -xzf geth-linux-amd64-1.10.2-97d11b01.tar.gz
+rm geth-linux-amd64-1.10.2-97d11b01.tar.gz
+```
+
+#### Start syncing
+
+```
+./geth-linux-amd64-1.10.2-97d11b01/geth -rinkeby -http -syncmode snap
+```
+
+You may wish to run this command inside a temporary container like `screen`, in case you get disconnected from the session.
+
+Once these two `geth` are running, it will take some time for them to sync the full chain.
+
+## Break Time
+
+Take a break, go get something to eat, have a cup of tea, and check back in a few hours.
+
+Perhaps do a few stretches, go for a walk, get some sunshine, but stay safe...
+
+Or better yet, start it syncing before you go to bed, and wake up in the morning, and it should be ready.
+
+## Set up livepeer
+
+### Verify synchronisation
+
+Before you continue, check that the `geth` processes that you started previously are fully synchronised with Rinkeby Testnet.
+
+Look for the following message to know that `geth` is synchronised:
+```
+
+```
+
+### livepeer Orchestrator/Transcoder (Session 3)
+
+Open another session on the O/T server.
+
+#### Download livepeer
 
 ```
 wget https://github.com/livepeer/go-livepeer/releases/download/v0.5.17/livepeer-linux-amd64.tar.gz
 tar -xzf livepeer-linux-amd64.tar.gz
-./livepeer-linux-amd64/livepeer -version
+rm livepeer-linux-amd64.tar.gz
+livepeer-linux-amd64/livepeer -version
 ```
 
-### Run O/T process
+#### Run O/T process
 
 ```
-./livepeer-linux-amd64/livepeer -network rinkeby -orchestrator -transcoder -ethUrl https://rinkeby.infura.io/v3/67..b3 -pricePerUnit 1000000
+./livepeer-linux-amd64/livepeer -network rinkeby -orchestrator -transcoder -ethUrl http://localhost:8545 -pricePerUnit 999999 -v 99
 ```
 
-Follow the instruction, until you see `Received Ping request` in the console.
+Follow the instructions, until you see `Received Ping request` in the console.
 
-### Send some Rinkeby ETH
+### Fund Orchestrator
 
-Send some Rinkeby ETH to the Ethereum address generated by the livepeer process in a previous step. 1 ETH ought to be enough.
+#### Send Rinkeby ETH
+
+Send some Rinkeby ETH to the Ethereum address generated by the livepeer Orchestrator/Transcoder process in a previous step. 1 ETH ought to be enough.
 
 Your Ethereum address starts with `0x`.
 
-### Register the Orchestrator with Livepeer Protocol
+### Configure livepeer Orchestrator (Session 4)
 
-Session 3: Open another session onto the O/T server:
+Open another session on the O/T server:
 
 #### Run livepeer_cli
 
@@ -124,21 +214,207 @@ You see, crypto UX _can_ be easy! ;)
 
 Choose option `12. Invoke multi-step "become an orchestrator"`.
 
+[BLOCKED - DUE TO PROTOCOL ON RINKEBY NOT BEING UPDATED]
 
-## Set up B
+### livepeer Broadcaster (Session 5)
 
-### Download and verify version
+Open another session on the B server:
+
+#### Download livepeer
 
 ```
 wget https://github.com/livepeer/go-livepeer/releases/download/v0.5.17/livepeer-linux-amd64.tar.gz
 tar -xzf livepeer-linux-amd64.tar.gz
+rm livepeer-linux-amd64.tar.gz
 ./livepeer-linux-amd64/livepeer -version
 ```
 
 ### Run B process
 
 ```
-./livepeer-linux-amd64/livepeer -network rinkeby -broadcaster -ethUrl https://rinkeby.infura.io/v3/67..b3 -maxPricePerUnit 999999 -orchAddr x.x.x.x:8935
+./livepeer-linux-amd64/livepeer -network rinkeby -broadcaster -ethUrl https://rinkeby.infura.io/v3/677f7a6e77204b11bb8ced8e04d5a8b3 -maxPricePerUnit 1000000 -orchAddr 194.182.171.190:8935 -v 99
+
+./livepeer-linux-amd64/livepeer -network rinkeby -broadcaster -ethUrl http://194.182.171.190:8545 -maxPricePerUnit 1000000 -orchAddr 194.182.171.190:8935 -v 99
 ```
 
-When asked to create a password, just press return, for ease of use, so that it enters an empty password, and means that you won't need to enter a password every time you run the process.
+Note: in the command above, replace `xx.xx.xx.xx` with the network IP address of the Orchestrator.
+
+Follow the instructions, until you see `Video Ingest Endpoint - rtmp://127.0.0.1:1935` in the console.
+
+### Fund Broadcaster
+
+#### Send Rinkeby ETH
+
+Send some Rinkeby ETH to the Ethereum address generated by the livepeer Broadcaster process in a previous step. 1 ETH ought to be enough.
+
+### Configure livepeer Broadcaster (Session 6)
+
+Open another session on the B server:
+
+#### Run livepeer_cli
+
+```
+./livepeer-linux-amd64/livepeer_cli
+```
+
+This will print some information about your node, and offer you a list of options:
+
+```
+What would you like to do? (default = stats)
+1. Get node status
+2. View protocol parameters
+3. List registered orchestrators
+4. Invoke "initialize round"
+5. Invoke "bond"
+6. Invoke "unbond"
+7. Invoke "rebond"
+8. Invoke "withdraw stake" (LPT)
+9. Invoke "withdraw fees" (ETH)
+10. Invoke "transfer" (LPT)
+11. Invoke "deposit broadcasting funds" (ETH)
+12. Invoke "unlock broadcasting funds"
+13. Invoke "cancel unlock of broadcasting funds"
+14. Invoke "withdraw broadcasting funds"
+15. Set broadcast config
+16. Set maximum Ethereum gas price
+17. Get test LPT
+18. Get test ETH
+19. Sign a message
+```
+
+You see, crypto UX _can_ be easy! ;)
+
+#### Deposit Broadcasting Funds
+
+Choose option `11. Invoke "deposit broadcasting funds" (ETH)`.
+
+```
+> 11
+Current Deposit: 0 WEI
+Current Reserve: 0 WEI
+Enter deposit amount in ETH - > 
+```
+
+Enter `0.4` as the amount to deposit.
+
+```
+> 11
+Current Deposit: 0 WEI
+Current Reserve: 0 WEI
+Enter deposit amount in ETH - > 0.4
+Enter reserve amount in ETH - > 
+```
+
+Enter `0.4` as the amount to put in reserve.
+
+```
+> 11
+Current Deposit: 0 WEI
+Current Reserve: 0 WEI
+Enter deposit amount in ETH - > 0.4
+Enter reserve amount in ETH - > 0.4
+fundDepositAndReserve success true
+```
+
+Once completed, you should see the message `fundDepositAndReserve success true`
+
+You can verify that your deposits have worked by running `1. Get node status`.
+
+```
+...
+*----------*----------*
+|  Deposit |  0.4 ETH |
+*----------*----------*
+|  Reserve |  0.4 ETH |
+*----------*----------*
+...
+```
+
+### Start streaming (Session 7)
+
+Open another session on the B server:
+
+#### Install ffmpeg
+
+```
+sudo apt install ffmpeg -y
+```
+
+#### Publish a test stream
+
+```
+ffmpeg -re -f lavfi -i testsrc=size=1280x720:rate=30,format=yuv420p -f lavfi -i sine -c:v libx264 -b:v 1000k -x264-params keyint=60 -c:a aac -f flv rtmp://127.0.0.1:1935/test-stream
+```
+
+Take special note of the text `1280x720`, which configures the pixel resolution of the test stream.
+
+### Check output (Session 8)
+
+Open another session on the B server:
+
+#### Curl the stream URL
+
+```
+curl http://127.0.0.1:8935/stream/test-stream.m3u8
+```
+
+Should show:
+```
+
+```
+
+Take special note of the renditions with pixel resolutions of `426x240` and `640x360`, which are being served by the Broadcaster, and provided by the Orchestrator/Transcoder.
+
+The act of turning a `1280x720` pixel livestream into a `426x240` pixel livestream and a `640x360` pixel livestream is called "transcoding".
+
+This completes the setup of a minimum viable Broadcaster-Orchestrator-Transcoder (BOT) Network.
+
+## Further Reading
+
+This section is for the enthusiasts, and contains additional tips on what you can observe and vary about the operations of this network.
+
+### livepeer_cli
+
+The instructions above give a brief overview of the `livepeer_cli`.
+
+It's worth studying the information shown in this interface, and also reviewing and trying some of the options which don't get covered above.
+
+### Orchestrator/Transcoder
+
+#### Basic Operational Overview
+
+The Orchestrator/Transcoder process is split into two distinct processes: the Orchestrator (`O`) and the Transcoder (`T`).
+
+##### The Orchestrator
+
+The `O` is primarily responsible for receiving video to be transcoded, and distributing it across all Transcoders which are registered with it.
+
+In this case, there is only 1 Transcoder registered with this Orchestrator, but it's possible to have >1, and Livepeer is developing concepts around Transcoding Pools (see [Livepool](https://www.livepool.io).
+
+Second, the Orchestrator is responsible for processing payments from the Broadcaster.
+
+Payments are sent in the form of "Probabilistic Micropayment" tickets, which e.g. have a 1/100000 chance of being worth 0.2 ETH... so each one is "nominally" worth 0.000002 ETH or ~$0.0057, but statistically you need to receive around 100,000 of them to receive a winning ticket.
+
+You may occasionally see the Orchestrator submit a transaction to `redeemWinningTicket`. This is when the O receives a winning ticket, and submits the transaction to Ethereum to redeem that winning ticket. Once done, the Orchestrator's "Pending Fees" balance gets incremented by the "face value" of the ticket.
+
+Finally, the Orchestrator is responsible for calling `reward` on the protocol, which mints new LPT for the O, which are shared amongst the O's delegators.
+
+##### The Transcoder
+
+#### Probabilistic Micropayment Tickets
+
+### Broadcaster
+
+#### Basic Operational Overview
+#### Transcoding Options
+#### Play the test-stream
+
+### Publisher
+
+#### Alter the resolution
+
+### geth / Ethereum
+
+### Monitoring
+
+Run each process with a `-monitor` flag

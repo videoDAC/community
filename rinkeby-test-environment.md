@@ -139,7 +139,7 @@ tar -xzf livepeer-linux-amd64.tar.gz
 ### Run B process
 
 ```
-./livepeer-linux-amd64/livepeer -network rinkeby -broadcaster -ethUrl https://rinkeby.infura.io/v3/677f7a6e77204b11bb8ced8e04d5a8b3 -maxPricePerUnit 999999 -orchAddr 89.145.162.114:8935
+./livepeer-linux-amd64/livepeer -network rinkeby -broadcaster -ethUrl https://rinkeby.infura.io/v3/677f7...5a8b3 -maxPricePerUnit 999999 -orchAddr 89.145.162.114:8935
 ```
 
 When asked to create a password, just press return, for ease of use, so that it enters an empty password, and means that you won't need to enter a password every time you run the process.

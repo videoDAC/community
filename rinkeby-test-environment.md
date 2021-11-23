@@ -8,6 +8,14 @@ These instructions are to help you set up an end-to-end Broadcaster-Orchestrator
 
 For those familiar with command-line interfaces, these instructions ought to be completed within 30 minutes of work. For those less familiar with the command-line, you should allocate 1-2 hours.
 
+## A note about GPUs
+
+Livepeer's public Transcoding network is capable of processing high volumes of live video. The processing currently involves the act of "shrinking" the video, from e.g. 1920x1080 to e.g. 256x144. This "shrinking" makes it more likely that content can reach viewers with any device, anywhere on the planet.
+
+For an Orchestrator / Transfoer, this "shrinking" is best performed with a Graphics Processing Unit (GPU), in order to be able to process high volumes of video, and serve them back to the Broadcaster in sub-real time.
+
+As this document is intended as a "minimum viable" implementation, it does not cover the use of GPUs, and relies solely on CPU transcoding.
+
 ## Requirements
 
 You will need:
